@@ -34,5 +34,6 @@ const petImage = computed<string>(() => {
 <style scoped>
 main {
   background-color: #CEBEB9;
+  margin-top: 32px;
 }
 </style>

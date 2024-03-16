@@ -2,18 +2,20 @@
 </script>
 
 <template>
-    <header>
-        <p>outpet</p>
-        <nav>
-            <ul>
-                <li><a href="/">setting</a></li>
-            </ul>
-        </nav>
-    </header>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">アウトペット</a>
+        </div>
+        <div>
+          <a class="navbar-text navbar-right" href="#">setting</a>
+        </div>
+      </div>
+    </nav>
 </template>
 
 <style scoped>
-header {
+nav {
   background-color: #CEBEB9;
 }
 </style>
