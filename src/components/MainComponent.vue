@@ -72,7 +72,10 @@ main {
     position: relative;
 }
 .pet-image {
-    margin-left: 5%;
+    margin-left: 10%;
+}
+.pet-image img {
+    height: calc(100vh - 230px);
 }
 .experience-container {
     position: absolute;
