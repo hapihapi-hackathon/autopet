@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {computed, ref} from 'vue';
+import {computed, ref, onMounted} from 'vue';
+import axios from 'axios';
 import imageUrl1 from '@/assets/images/01.png'; // 0~9
 import imageUrl2 from '@/assets/images/02.png'; // 10~29
 import imageUrl3 from '@/assets/images/03.png'; // 30~49
@@ -8,7 +9,30 @@ import imageUrl5 from '@/assets/images/05.png'; // 80~129
 import imageUrl6 from '@/assets/images/06.png'; // 130~
 
 const username = ref<string>('はぴはぴ花子'); // ダミーデータ
-const commitNumber = ref<number>(999); // ダミーデータ
+const githubId = 'cocolo93';
+const startDate = '2024-03-17T00:00:00Z';
+const commitNumber = ref<number>(0);
+const loading = ref<boolean>(true);
+
+const getCommitNumber = async () => {
+    try {
+        const response = await axios.get(`https://api.github.com/users/${githubId}/events`);
+        const events = response.data;
+        let totalCommits = 0;
+        events.forEach(event => {
+            if (event.type === 'PushEvent' && new Date(event.created_at) >= new Date(startDate)) {
+                totalCommits += event.payload.commits.length;
+          　}
+        });
+        commitNumber.value = totalCommits;
+        loading.value = false;
+    } catch (error) {
+        console.error('Error fetching commit number:', error);
+    }
+    console.log(commitNumber.value)
+};
+
+onMounted(getCommitNumber);
 
 const experience = computed<number>(() => {
     return commitNumber.value % 10;
