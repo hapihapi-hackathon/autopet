@@ -82,7 +82,8 @@ main {
     right: 18px;
 }
 .level-container {
-    text-align: center;
+    text-align: right;
+    padding-right: 30px;
     font-size: 30px;
 }
 .level-container span {
