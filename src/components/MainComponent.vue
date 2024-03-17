@@ -43,14 +43,13 @@ const petImage = computed<string>(() => {
                 <div class="experience-container ml-n3">
                     <div class="level-container">Level <span>{{ level }}</span></div>
                     <div class="experience-bar">
-                        <div class="service-name">Github</div>
+                        <div class="service-name">経験値</div>
                         <div class="progress-container d-flex">
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                             <div class="progress-detail">
                                 <p>{{ experience }} / 10</p>
-                                <p>commit</p>
                             </div>
                         </div>
                     </div>
@@ -93,7 +92,7 @@ main {
     padding: 10px;
 }
 .progress-container .progress {
-    width: 80%;
+    width: 82%;
     margin: auto 0;
     height: 1.3rem;
 }
