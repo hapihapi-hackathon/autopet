@@ -9,6 +9,9 @@ import imageUrl6 from '@/assets/images/06.png'; // 130~
 
 const username = ref<string>('はぴはぴ花子'); // ダミーデータ
 const commitNumber = ref<number>(-1); // ダミーデータ
+const level = ref<number>(20) //ダミーデータ
+const percentage = ref<String>('30%') //ダミーデータ
+const experience = ref<number>(3) //ダミーデータ
 
 const gitLevel = computed<number>(() => {
     return Math.floor(commitNumber.value / 10);
@@ -34,15 +37,28 @@ const petImage = computed<string>(() => {
 
 <template>
     <main class="main-content">
-        <div>
+        <div class="username-container">
             <h1>{{ username }}</h1>
         </div>
-        <div class="d-flex">
-            <div class="flex-fill pet-container">
-                <img :src="petImage" alt="Pet Image" class="img-fluid"/>
-            </div>
-            <div class="flex-fill experience-bar ml-n3">
-                    <p>TODO:経験値バー</p>
+        <div>
+            <div class="pet-container">
+                <div class="pet-image">
+                    <img :src="petImage" alt="Pet Image" class="img-fluid"/>
+                </div>
+                <div class="experience-container ml-n3">
+                    <div class="level-container">Level <span>{{ level }}</span></div>
+                    <div class="experience-bar">
+                        <div class="service-name">経験値</div>
+                        <div class="progress-container d-flex">
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="progress-detail">
+                                <p>{{ experience }} / 10</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -53,11 +69,60 @@ main {
     background-color: #CEBEB9;
     margin-top: 32px;
 }
-/*見やすくするため仮で色つけてます*/
-/* .experience-bar {
-    background-color: pink;
+.username-container {
+    padding-top: 16px;
+    padding-left: 32px;
 }
 .pet-container {
-    background-color: blue;
-} */
+    position: relative;
+}
+.pet-image {
+    margin-left: 10%;
+}
+.pet-image img {
+    height: calc(100vh - 230px);
+}
+.experience-container {
+    position: absolute;
+    width: 480px;
+    bottom: 18px;
+    right: 18px;
+}
+.level-container {
+    text-align: right;
+    padding-right: 30px;
+    font-size: 30px;
+}
+.level-container span {
+    font-size: 60px;
+}
+.progress-container {
+    padding: 10px;
+}
+.progress-container .progress {
+    width: 82%;
+    margin: auto 0;
+    height: 1.3rem;
+}
+.progress-container .progress-detail {
+    padding-left: 13px;
+}
+.progress-container .progress-detail p {
+    margin-bottom: 0;
+    text-align: center;
+}
+.experience-bar {
+    border-radius: 10px;
+    border: #4E343F 5px solid;
+    background-color: #6F6884;
+}
+.experience-bar .service-name {
+    background-color: #7A8FAA;
+    padding: 8px;
+    color: #fff;
+}
+.experience-bar .progress-bar {
+    width: v-bind(percentage);
+    background-color: #FEB099;
+}
 </style>
