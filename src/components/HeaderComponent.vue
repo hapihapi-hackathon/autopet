@@ -5,20 +5,20 @@
 
 <template>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
+        <div class="container-fluid">
         <div class="navbar-header">
           <a class="navbar-brand" href="/"><img :src="logo" alt="outpet"/></a>
         </div>
         <div>
-          <a class="navbar-text navbar-right" href="#">setting</a>
+            <a class="navbar-text navbar-right" href="#">setting</a>
         </div>
-      </div>
+        </div>
     </nav>
 </template>
 
 <style scoped>
 nav {
-  background-color: #CEBEB9;
+    background-color: #CEBEB9;
 }
 .navbar-brand img {
   width: 70%;
