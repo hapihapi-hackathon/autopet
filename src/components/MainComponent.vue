@@ -8,13 +8,19 @@ import imageUrl5 from '@/assets/images/05.png'; // 80~129
 import imageUrl6 from '@/assets/images/06.png'; // 130~
 
 const username = ref<string>('はぴはぴ花子'); // ダミーデータ
-const commitNumber = ref<number>(-1); // ダミーデータ
-const level = ref<number>(20) //ダミーデータ
-const percentage = ref<String>('30%') //ダミーデータ
-const experience = ref<number>(3) //ダミーデータ
+const commitNumber = ref<number>(999); // ダミーデータ
+
+const experience = computed<number>(() => {
+    return commitNumber.value % 10;
+});
 
 const gitLevel = computed<number>(() => {
     return Math.floor(commitNumber.value / 10);
+});
+
+const percentage = computed<string>(() => {
+    const progress = (experience.value / 10) * 100;
+    return `${progress.toFixed(0)}%`;
 });
 
 const petImage = computed<string>(() => {
@@ -46,7 +52,7 @@ const petImage = computed<string>(() => {
                     <img :src="petImage" alt="Pet Image" class="img-fluid"/>
                 </div>
                 <div class="experience-container ml-n3">
-                    <div class="level-container">Level <span>{{ level }}</span></div>
+                    <div class="level-container">Level <span>{{ gitLevel }}</span></div>
                     <div class="experience-bar">
                         <div class="service-name">経験値</div>
                         <div class="progress-container d-flex">
