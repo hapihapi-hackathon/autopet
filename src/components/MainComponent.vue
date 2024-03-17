@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue';
-import imageUrl1 from '@/assets/images/01.png';
-import imageUrl2 from '@/assets/images/02.png';
-import imageUrl3 from '@/assets/images/03.png';
-import imageUrl4 from '@/assets/images/04.png';
-import imageUrl5 from '@/assets/images/05.png';
-import imageUrl6 from '@/assets/images/06.png';
+import imageUrl1 from '@/assets/images/01.png'; // 0~9
+import imageUrl2 from '@/assets/images/02.png'; // 10~29
+import imageUrl3 from '@/assets/images/03.png'; // 30~49
+import imageUrl4 from '@/assets/images/04.png'; // 50~79
+import imageUrl5 from '@/assets/images/05.png'; // 80~129
+import imageUrl6 from '@/assets/images/06.png'; // 130~
 
-const username = ref('モナ'); // ダミーデータ
-const commitNumber = ref<number>(180); // ダミーデータ
+const username = ref<string>('はぴはぴ花子'); // ダミーデータ
+const commitNumber = ref<number>(-1); // ダミーデータ
+
+const gitLevel = computed<number>(() => {
+    return Math.floor(commitNumber.value / 10);
+});
 
 const petImage = computed<string>(() => {
-    if (commitNumber.value <= 25) {
+    let level: number = gitLevel.value;
+    if (level <= 0) {
         return imageUrl1;
-    } else if (commitNumber.value <= 50) {
+    } else if (level < 3) {
         return imageUrl2;
-    } else if (commitNumber.value <= 75) {
+    } else if (level < 5) {
         return imageUrl3;
-    } else if (commitNumber.value <= 100) {
+    } else if (level < 8) {
         return imageUrl4;
-    } else if (commitNumber.value <= 125){
+    } else if (level < 13) {
         return imageUrl5;
     } else {
         return imageUrl6;
@@ -37,8 +42,7 @@ const petImage = computed<string>(() => {
                 <img :src="petImage" alt="Pet Image" class="img-fluid"/>
             </div>
             <div class="flex-fill experience-bar ml-n3">
-                    <!-- 経験値バーの内容 -->
-                    <img :src="petImage" alt="Pet Image" class="img-fluid"/>
+                    <p>TODO:経験値バー</p>
             </div>
         </div>
     </main>
@@ -50,12 +54,10 @@ main {
     margin-top: 32px;
 }
 /*見やすくするため仮で色つけてます*/
-.experience-bar {
+/* .experience-bar {
     background-color: pink;
-    margin-left: -200px; /**重なっている部分 */
-    z-index: 1;
 }
 .pet-container {
     background-color: blue;
-}
+} */
 </style>
