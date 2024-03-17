@@ -10,6 +10,7 @@ import imageUrl6 from '@/assets/images/06.png'; // 130~
 
 const username = ref<string>('はぴはぴ花子'); // ダミーデータ
 const githubId = 'cocolo93';
+const email = 'chococolo0903@gmail.com'
 const startDate = '2024-03-17T00:00:00Z';
 const commitNumber = ref<number>(0);
 const loading = ref<boolean>(true);
@@ -18,13 +19,15 @@ const getCommitNumber = async () => {
     try {
         const response = await axios.get(`https://api.github.com/users/${githubId}/events`);
         const events = response.data;
-        let totalCommits = 0;
         events.forEach(event => {
             if (event.type === 'PushEvent' && new Date(event.created_at) >= new Date(startDate)) {
-                totalCommits += event.payload.commits.length;
+                event.payload.commits.forEach(commit => {
+                    if (commit.author.email === email) {
+                        commitNumber.value += 1;
+                    }
+                } )         
           　}
         });
-        commitNumber.value = totalCommits;
         loading.value = false;
     } catch (error) {
         console.error('Error fetching commit number:', error);
