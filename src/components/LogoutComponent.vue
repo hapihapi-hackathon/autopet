@@ -1,6 +1,7 @@
 <script lang="ts">
 import { signOut } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; // Firebaseの設定をインポート
+import router from '@/router';
 
 export default {
     methods: {
@@ -8,7 +9,7 @@ export default {
             try {
                 await signOut(auth);
                 console.log('ログアウトしました');
-                // ログアウト成功後の処理（例：ログインページへのリダイレクトなど）
+                router.push('/'); // ホームページへリダイレクト
             } catch (error) {
                 console.error("ログアウトエラー:", error);
                 // エラーハンドリング
