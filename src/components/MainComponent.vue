@@ -19,14 +19,14 @@ const getCommitNumber = async () => {
     try {
         const response = await axios.get(`https://api.github.com/users/${githubId}/events`);
         const events = response.data;
-        events.forEach(event => {
+        events.forEach((event: { type: string; created_at: string; payload: { commits: { author: { email: string; }; }[]; }; }) => {
             if (event.type === 'PushEvent' && new Date(event.created_at) >= new Date(startDate)) {
-                event.payload.commits.forEach(commit => {
+                event.payload.commits.forEach((commit: { author: { email: string; }; }) => {
                     if (commit.author.email === email) {
                         commitNumber.value += 1;
                     }
-                } )         
-          　}
+                })
+            }
         });
         loading.value = false;
     } catch (error) {
