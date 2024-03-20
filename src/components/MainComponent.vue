@@ -26,7 +26,7 @@ const getCommitNumber = async () => {
                         commitNumber.value += 1;
                     }
                 } )         
-          　}
+            }
         });
         loading.value = false;
     } catch (error) {
