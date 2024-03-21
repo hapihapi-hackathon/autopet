@@ -12,7 +12,6 @@ export default {
                 router.push('/'); // ホームページへリダイレクト
             } catch (error) {
                 console.error("ログアウトエラー:", error);
-                // エラーハンドリング
             }
         }
     }

@@ -15,6 +15,7 @@ export default {
                 sessionStorage.setItem('token', token);
                 sessionStorage.setItem('email', email);
                 sessionStorage.setItem('displayName', displayName);
+                console.log('ログインしました');
                 router.push('/home'); // ホームページへリダイレクト
             } catch (error) {
                 console.error("認証エラー:", error);

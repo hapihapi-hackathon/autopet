@@ -34,7 +34,7 @@ const getCommitNumber = async () => {
     if (!githubId.value) return;
 
     try {
-        const response = await axios.get(`https://api.github.com/users/${githubId}/events`);
+        const response = await axios.get(`https://api.github.com/users/${githubId.value}/events`);
         const events = response.data;
         events.forEach(event => {
             if (event.type === 'PushEvent' && new Date(event.created_at) >= new Date(startDate)) {
