@@ -8,14 +8,14 @@ import imageUrl4 from '@/assets/images/04.png'; // 50~79
 import imageUrl5 from '@/assets/images/05.png'; // 80~129
 import imageUrl6 from '@/assets/images/06.png'; // 130~
 
-const username = sessionStorage.getItem('displayName');
-const email = sessionStorage.getItem('email');
+const username = ref(sessionStorage.getItem('displayName'));
+const email = ref(sessionStorage.getItem('email'));
 const githubId = ref(null);
 const startDate = '2024-03-17T00:00:00Z';
 const commitNumber = ref<number>(0);
 const loading = ref<boolean>(true);
 
-const token = sessionStorage.getItem('token'); // トークンを取得
+const token = sessionStorage.getItem('token');
 if (token) {
     fetch('https://api.github.com/user', {
         headers: {
@@ -31,6 +31,8 @@ if (token) {
 }
 
 const getCommitNumber = async () => {
+    if (!githubId.value) return;
+
     try {
         const response = await axios.get(`https://api.github.com/users/${githubId}/events`);
         const events = response.data;
@@ -47,10 +49,7 @@ const getCommitNumber = async () => {
     } catch (error) {
         console.error('Error fetching commit number:', error);
     }
-    console.log(commitNumber.value)
 };
-
-// onMounted(getCommitNumber);
 
 const experience = computed<number>(() => {
     return commitNumber.value % 10;

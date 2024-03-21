@@ -17,7 +17,6 @@ export default {
                 sessionStorage.setItem('displayName', displayName);
                 router.push('/home'); // ホームページへリダイレクト
             } catch (error) {
-                // エラーハンドリング
                 console.error("認証エラー:", error);
             } 
         }
