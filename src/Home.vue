@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LogoutComponent from './components/LogoutComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import MainComponent from './components/MainComponent.vue';
 </script>

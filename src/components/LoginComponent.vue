@@ -1,19 +1,25 @@
 <script lang="ts">
-import {signInWithPopup, GithubAuthProvider } from 'firebase/auth';
+import {signInWithPopup, GithubAuthProvider, type UserCredential } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; // Firebaseの設定をインポート
 import router from '@/router';
 
+interface GithubUserCredential extends UserCredential {
+    _tokenResponse: {
+        oauthAccessToken: string;
+    }
+}
 export default {
     methods: {
         async loginWithGitHub() {
             const provider = new GithubAuthProvider();
             try {
-                const result = await signInWithPopup(auth, provider);
-                const email = result.user.email;
+                const result = await signInWithPopup(auth, provider) as GithubUserCredential;
                 const displayName = result.user.displayName;
                 const token = result._tokenResponse.oauthAccessToken;
+                if (!displayName) {
+                    throw new Error('表示名を取得できません');
+                }
                 sessionStorage.setItem('token', token);
-                sessionStorage.setItem('email', email);
                 sessionStorage.setItem('displayName', displayName);
                 console.log('ログインしました');
                 router.push('/home'); // ホームページへリダイレクト
