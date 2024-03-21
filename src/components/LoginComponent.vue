@@ -32,7 +32,27 @@ export default {
 </script>
 
 <template>
-    <div>
-        <button @click="loginWithGitHub">GitHubでログイン</button>
-    </div>
+    <main>
+        <div class="d-flex flex-column justify-content-center align-items-center container">
+            <p>GitHubアカウントでログインする</p>
+            <button @click="loginWithGitHub">▷はい</button>
+        </div>
+    </main>
 </template>
+
+<style scoped>
+main {
+    background-color: #CEBEB9;
+    margin-top: 32px;
+}
+p {
+    font-size: 32px;
+}
+button {
+    margin-top: 24px;
+}
+.container{
+    padding: 16px;
+}
+</style>
+
