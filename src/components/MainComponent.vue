@@ -8,21 +8,49 @@ import imageUrl4 from '@/assets/images/04.png'; // 50~79
 import imageUrl5 from '@/assets/images/05.png'; // 80~129
 import imageUrl6 from '@/assets/images/06.png'; // 130~
 
-const username = ref<string>('はぴはぴ花子'); // ダミーデータ
-const githubId = 'cocolo93';
-const email = 'chococolo0903@gmail.com'
+const username = ref(sessionStorage.getItem('displayName'));
+const githubId = ref(null);
 const startDate = '2024-03-17T00:00:00Z';
 const commitNumber = ref<number>(0);
 const loading = ref<boolean>(true);
+let emails: string[] = [];
+
+const token = sessionStorage.getItem('token');
+if (token) {
+    fetch('https://api.github.com/user', {
+        headers: {
+            Authorization: `token ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(user => {
+        githubId.value = user.login;
+        getEmails(user.login);
+        getCommitNumber();
+    })
+    .catch(error => console.error('GitHub APIからのユーザー情報取得に失敗:', error));
+}
+
+const getEmails = async (githubId: string) => {
+    const res = await fetch('https://api.github.com/user/emails', {
+        headers: {
+            Authorization: `token ${token}`
+        }
+    });
+    const data = await res.json();
+    emails = data.map((email: { email: string; }) => email.email);
+    emails.push(`${githubId}@users.noreply.github.com`)
+};
 
 const getCommitNumber = async () => {
+    if (!githubId.value) return;
     try {
-        const response = await axios.get(`https://api.github.com/users/${githubId}/events`);
+        const response = await axios.get(`https://api.github.com/users/${githubId.value}/events`);
         const events = response.data;
         events.forEach((event: { type: string; created_at: string; payload: { commits: { author: { email: string; }; }[]; }; }) => {
             if (event.type === 'PushEvent' && new Date(event.created_at) >= new Date(startDate)) {
                 event.payload.commits.forEach((commit: { author: { email: string; }; }) => {
-                    if (commit.author.email === email) {
+                    if (emails.includes(commit.author.email)) {
                         commitNumber.value += 1;
                     }
                 })
@@ -32,10 +60,7 @@ const getCommitNumber = async () => {
     } catch (error) {
         console.error('Error fetching commit number:', error);
     }
-    console.log(commitNumber.value)
 };
-
-onMounted(getCommitNumber);
 
 const experience = computed<number>(() => {
     return commitNumber.value % 10;
