@@ -6,7 +6,6 @@ import MainComponent from './components/MainComponent.vue';
 
 <template>
     <div id="app" class="content-wrapper">
-        <LogoutComponent />
         <HeaderComponent />
         <MainComponent />
     </div>
