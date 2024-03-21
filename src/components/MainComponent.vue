@@ -8,12 +8,27 @@ import imageUrl4 from '@/assets/images/04.png'; // 50~79
 import imageUrl5 from '@/assets/images/05.png'; // 80~129
 import imageUrl6 from '@/assets/images/06.png'; // 130~
 
-const username = ref<string>('はぴはぴ花子'); // ダミーデータ
-const githubId = 'cocolo93';
-const email = 'chococolo0903@gmail.com'
+const username = sessionStorage.getItem('displayName');
+const email = sessionStorage.getItem('email');
+const githubId = ref(null);
 const startDate = '2024-03-17T00:00:00Z';
 const commitNumber = ref<number>(0);
 const loading = ref<boolean>(true);
+
+const token = sessionStorage.getItem('token'); // トークンを取得
+if (token) {
+    fetch('https://api.github.com/user', {
+        headers: {
+            Authorization: `token ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(user => {
+        githubId.value = user.login;
+        getCommitNumber();
+    })
+    .catch(error => console.error('GitHub APIからのユーザー情報取得に失敗:', error));
+}
 
 const getCommitNumber = async () => {
     try {
@@ -35,7 +50,7 @@ const getCommitNumber = async () => {
     console.log(commitNumber.value)
 };
 
-onMounted(getCommitNumber);
+// onMounted(getCommitNumber);
 
 const experience = computed<number>(() => {
     return commitNumber.value % 10;

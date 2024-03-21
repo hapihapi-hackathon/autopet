@@ -1,5 +1,4 @@
 <script lang="ts">
-// モジュラーインポート方式を使用
 import {signInWithPopup, GithubAuthProvider } from 'firebase/auth';
 import { auth } from '@/firebaseConfig'; // Firebaseの設定をインポート
 import router from '@/router';
@@ -10,11 +9,12 @@ export default {
             const provider = new GithubAuthProvider();
             try {
                 const result = await signInWithPopup(auth, provider);
-                console.log("ログイン成功");
-                console.log(result);
-                let email: string| null = result.user.email;
-                let id
+                const email = result.user.email;
+                const displayName = result.user.displayName;
+                const token = result._tokenResponse.oauthAccessToken;
+                sessionStorage.setItem('token', token);
                 sessionStorage.setItem('email', email);
+                sessionStorage.setItem('displayName', displayName);
                 router.push('/home'); // ホームページへリダイレクト
             } catch (error) {
                 // エラーハンドリング
