@@ -25,10 +25,14 @@ if (token) {
     .then(response => response.json())
     .then(user => {
         githubId.value = user.login;
-        getEmails(user.login);
-        getCommitNumber();
+        setupGithubInfo(user.login);
     })
     .catch(error => console.error('GitHub APIからのユーザー情報取得に失敗:', error));
+}
+
+const setupGithubInfo = async (githubId: string) => {
+    await getEmails(githubId);
+    await getCommitNumber();
 }
 
 const getEmails = async (githubId: string) => {
@@ -39,7 +43,7 @@ const getEmails = async (githubId: string) => {
     });
     const data = await res.json();
     emails = data.map((email: { email: string; }) => email.email);
-    emails.push(`${githubId}@users.noreply.github.com`)
+    emails.push(`${githubId}@users.noreply.github.com`);
 };
 
 const getCommitNumber = async () => {
