@@ -13,6 +13,7 @@ export default {
             try {
                 await signOut(auth);
                 console.log('ログアウトしました');
+                sessionStorage.clear();
                 router.push('/'); // ホームページへリダイレクト
             } catch (error) {
                 console.error("ログアウトエラー:", error);
