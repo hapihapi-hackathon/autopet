@@ -14,11 +14,8 @@ export default {
             const provider = new GithubAuthProvider();
             try {
                 const result = await signInWithPopup(auth, provider) as GithubUserCredential;
-                const displayName = result.user.displayName;
+                const displayName = result.user.displayName || 'ナナシさん';
                 const token = result._tokenResponse.oauthAccessToken;
-                if (!displayName) {
-                    throw new Error('表示名を取得できません');
-                }
                 sessionStorage.setItem('token', token);
                 sessionStorage.setItem('displayName', displayName);
                 console.log('ログインしました');
